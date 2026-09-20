@@ -4,7 +4,7 @@ import { formatCurrency } from '../utils/money.js';
 import { updateCartQuantity } from '../utils/updatecart.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
-import {renderPaymentSummary} from './paymentSummary.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 //const today = dayjs();
 //const deliveryDate = today.add(7, 'days');
@@ -18,10 +18,7 @@ export function renderOrderSummary() {
 
     const matchingProduct = getProduct(productId);
 
-
-
     const deliveryOptionId = cartItem.deliveryOptionId;
-
     const deliveryOption = getDeliveryOption(deliveryOptionId);
 
     const today = dayjs();
@@ -114,7 +111,9 @@ export function renderOrderSummary() {
 
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
+      renderPaymentSummary();
       updateCartQuantity();
+
     });
   });
   updateCartQuantity();
@@ -127,6 +126,7 @@ export function renderOrderSummary() {
       const selectedItem = document.querySelector(`.js-cart-item-container-${productId}`);
       selectedItem.classList.remove('is-editing-quantity');
       updateQuantityOperations(productId, selectedItem);
+      renderPaymentSummary();
     });
   });
 
@@ -140,6 +140,7 @@ export function renderOrderSummary() {
       selectedItem.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
           updateQuantityOperations(productId, selectedItem);
+          renderPaymentSummary();
         }
       });
     });
