@@ -16,7 +16,7 @@ export function renderPaymentSummary() {
 
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
         shippingPriceCents += deliveryOption.priceCents;
-        
+
     });
     //console.log(formatCurrency(shippingPriceCents));
     //console.log(productPriceCents, shippingPriceCents);
@@ -31,7 +31,7 @@ export function renderPaymentSummary() {
             </div>
 
             <div class="payment-summary-row">
-                <div>Items (3):</div>
+                <div>Items (${cart.length}):</div>
                 <div class="payment-summary-money">$${formatCurrency(productPriceCents)}</div>
             </div>
 
@@ -61,6 +61,5 @@ export function renderPaymentSummary() {
     `;
 
     document.querySelector('.js-payment-summary').innerHTML = paymentSummaryHTML;
+};
 
-    
-}

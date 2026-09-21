@@ -5,6 +5,6 @@ export function updateCartQuantity() {
   cart.forEach((cartitem) => {
     cartQuantity += cartitem.quantity;
   });
-  document.querySelector('.js-cart-quantity').innerText = cartQuantity;
+  document.querySelector('.js-cart-quantity').innerText = `${cartQuantity}`;
  
 };

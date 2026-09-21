@@ -5,6 +5,8 @@ import { updateCartQuantity } from '../utils/updatecart.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
+
 
 //const today = dayjs();
 //const deliveryDate = today.add(7, 'days');
@@ -24,7 +26,6 @@ export function renderOrderSummary() {
     const today = dayjs();
     const deliveryDate = today.add(deliveryOption.deliveryDays, 'days');
     const dateString = deliveryDate.format('dddd, MMMM D');
-
 
 
     cartSummaryHTML += `<div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
@@ -112,12 +113,12 @@ export function renderOrderSummary() {
       const container = document.querySelector(`.js-cart-item-container-${productId}`);
       container.remove();
       renderPaymentSummary();
-      updateCartQuantity();
+      //updateCartQuantity();
+      renderCheckoutHeader();
 
     });
   });
-  updateCartQuantity();
-
+  
 
   document.querySelectorAll('.js-save-quantity-link').forEach((link) => {
     link.addEventListener('click', () => {
@@ -136,11 +137,14 @@ export function renderOrderSummary() {
       const productId = link.dataset.productId;
       const selectedItem = document.querySelector(`.js-cart-item-container-${productId}`);
       selectedItem.classList.add('is-editing-quantity');
-
+      
       selectedItem.addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
           updateQuantityOperations(productId, selectedItem);
+          
           renderPaymentSummary();
+          //updateCartQuantity();
+          renderCheckoutHeader();
         }
       });
     });
@@ -150,7 +154,7 @@ export function renderOrderSummary() {
   function updateQuantityOperations(productId, selectedItem) {
     const newQuantity = Number(document.querySelector(`.js-quantity-input-${productId}`).value);
     updateQuantity(productId, newQuantity);
-    updateCartQuantity();
+    //updateCartQuantity();
     selectedItem.classList.remove('is-editing-quantity');
     cart.forEach((cartItem) => {
       if (cartItem.productId === productId) {
@@ -168,4 +172,6 @@ export function renderOrderSummary() {
       renderPaymentSummary();
     });
   });
+  //updateCartQuantity();
+  renderCheckoutHeader();
 };
